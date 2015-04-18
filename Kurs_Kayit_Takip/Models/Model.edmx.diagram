@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="1310bc73658f4181936488a1577a4132" Name="Diagram1">
+        <EntityTypeShape EntityType="kurs_kayitModel.Ders_Tablosu" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="kurs_kayitModel.Genel_Bilgi" Width="1.5" PointX="5.75" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="kurs_kayitModel.Kurs_Tablosu" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="kurs_kayitModel.Muhasebe_Tablosu" Width="1.5" PointX="8" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="kurs_kayitModel.Not_Tablosu" Width="1.5" PointX="5.25" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="kurs_kayitModel.Odeme_Detay_Tablosu" Width="1.5" PointX="10.25" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="kurs_kayitModel.Ogrenci_Tablosu" Width="1.5" PointX="3" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="kurs_kayitModel.Personel_Tablosu" Width="1.5" PointX="8" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="kurs_kayitModel.sysdiagrams" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="kurs_kayitModel.FK_Ders_Tablosu_Alan_Tablosu" ManuallyRouted="false" />
+        <AssociationConnector Association="kurs_kayitModel.FK_Not_Tablosu_Ders_Tablosu" ManuallyRouted="false" />
+        <AssociationConnector Association="kurs_kayitModel.FK_Muhassebe_Tablosu_Genel_Bilgi" ManuallyRouted="false" />
+        <AssociationConnector Association="kurs_kayitModel.FK_Personel_Tablosu_Genel_Bilgi" ManuallyRouted="false" />
+        <AssociationConnector Association="kurs_kayitModel.FK_Odeme_Detay_Tablosu_Muhassebe_Tablosu" ManuallyRouted="false" />
+        <AssociationConnector Association="kurs_kayitModel.FK_Not_Tablosu_Ogrenci_Tablosu" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

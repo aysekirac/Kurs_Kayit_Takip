@@ -1,0 +1,548 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="kurs_kayitModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Ders_Tablosu">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="Ders_Adi" Type="nvarchar" MaxLength="50" />
+          <Property Name="Alan_id" Type="int" />
+          <Property Name="Sinif" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'kurs_kayit.dbo.Duyuru_Tablosu' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="Duyuru_Tablosu">
+          <Property Name="id" Type="nchar" MaxLength="10" />
+          <Property Name="duyuru_icerigi" Type="nvarchar" MaxLength="50" />
+          <Property Name="ekleyen" Type="nvarchar" MaxLength="50" />
+        </EntityType>-->
+        <EntityType Name="Genel_Bilgi">
+          <Key>
+            <PropertyRef Name="TC_no" />
+          </Key>
+          <Property Name="TC_no" Type="nchar" MaxLength="11" Nullable="false" />
+          <Property Name="Adi" Type="nvarchar" MaxLength="50" />
+          <Property Name="Soyadi" Type="nvarchar" MaxLength="50" />
+          <Property Name="Telefon" Type="nchar" MaxLength="10" />
+          <Property Name="E-mail" Type="nvarchar" MaxLength="150" />
+          <Property Name="Adres" Type="nvarchar" MaxLength="250" />
+          <Property Name="Dogum_Tarihi" Type="datetime" />
+          <Property Name="Il" Type="int" />
+          <Property Name="Ilce" Type="int" />
+          <Property Name="Sifre" Type="nvarchar" MaxLength="150" />
+        </EntityType>
+        <EntityType Name="Kurs_Tablosu">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="Alan_adi" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Muhasebe_Tablosu">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="Ogrenci_TC" Type="nchar" MaxLength="11" />
+          <Property Name="Odeme_Tipi" Type="nvarchar" MaxLength="50" />
+          <Property Name="Odeme_Tarihi" Type="datetime" />
+          <Property Name="Genel_Tutar" Type="money" />
+          <Property Name="Genel_Kdv_Tutar" Type="money" />
+        </EntityType>
+        <EntityType Name="Not_Tablosu">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Ogrencinin_Notu" Type="int" Nullable="false" />
+          <Property Name="Ders_id" Type="int" Nullable="false" />
+          <Property Name="Ogrenci_No" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Odeme_Detay_Tablosu">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="Odeme_Tarihi" Type="datetime" Nullable="false" />
+          <Property Name="Odeme_Tutari" Type="money" Nullable="false" />
+          <Property Name="Taksit_Sayisi" Type="int" Nullable="false" />
+          <Property Name="Muhasebe_id" Type="int" Nullable="false" />
+          <Property Name="Odeme_Durumu" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Ogrenci_Tablosu">
+          <Key>
+            <PropertyRef Name="Ogrenci_no" />
+          </Key>
+          <Property Name="TC_no" Type="nchar" MaxLength="11" />
+          <Property Name="Ogrenci_no" Type="int" Nullable="false" />
+          <Property Name="Sinifi" Type="tinyint" />
+          <Property Name="Kurs_id" Type="int" />
+        </EntityType>
+        <EntityType Name="Personel_Tablosu">
+          <Key>
+            <PropertyRef Name="TC_no" />
+          </Key>
+          <Property Name="TC_no" Type="nchar" MaxLength="11" Nullable="false" />
+          <Property Name="Personel_Tipi" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="FK_Ders_Tablosu_Alan_Tablosu">
+          <End Role="Kurs_Tablosu" Type="Self.Kurs_Tablosu" Multiplicity="0..1" />
+          <End Role="Ders_Tablosu" Type="Self.Ders_Tablosu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kurs_Tablosu">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Ders_Tablosu">
+              <PropertyRef Name="Alan_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Muhassebe_Tablosu_Genel_Bilgi">
+          <End Role="Genel_Bilgi" Type="Self.Genel_Bilgi" Multiplicity="0..1" />
+          <End Role="Muhasebe_Tablosu" Type="Self.Muhasebe_Tablosu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genel_Bilgi">
+              <PropertyRef Name="TC_no" />
+            </Principal>
+            <Dependent Role="Muhasebe_Tablosu">
+              <PropertyRef Name="Ogrenci_TC" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Not_Tablosu_Ders_Tablosu">
+          <End Role="Ders_Tablosu" Type="Self.Ders_Tablosu" Multiplicity="1" />
+          <End Role="Not_Tablosu" Type="Self.Not_Tablosu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ders_Tablosu">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Not_Tablosu">
+              <PropertyRef Name="Ders_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Not_Tablosu_Ogrenci_Tablosu">
+          <End Role="Ogrenci_Tablosu" Type="Self.Ogrenci_Tablosu" Multiplicity="1" />
+          <End Role="Not_Tablosu" Type="Self.Not_Tablosu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ogrenci_Tablosu">
+              <PropertyRef Name="Ogrenci_no" />
+            </Principal>
+            <Dependent Role="Not_Tablosu">
+              <PropertyRef Name="Ogrenci_No" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Odeme_Detay_Tablosu_Muhassebe_Tablosu">
+          <End Role="Muhasebe_Tablosu" Type="Self.Muhasebe_Tablosu" Multiplicity="1" />
+          <End Role="Odeme_Detay_Tablosu" Type="Self.Odeme_Detay_Tablosu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Muhasebe_Tablosu">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Odeme_Detay_Tablosu">
+              <PropertyRef Name="Muhasebe_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Personel_Tablosu_Genel_Bilgi">
+          <End Role="Genel_Bilgi" Type="Self.Genel_Bilgi" Multiplicity="1" />
+          <End Role="Personel_Tablosu" Type="Self.Personel_Tablosu" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Genel_Bilgi">
+              <PropertyRef Name="TC_no" />
+            </Principal>
+            <Dependent Role="Personel_Tablosu">
+              <PropertyRef Name="TC_no" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="kurs_kayitModelStoreContainer">
+          <EntitySet Name="Ders_Tablosu" EntityType="Self.Ders_Tablosu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Genel_Bilgi" EntityType="Self.Genel_Bilgi" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Kurs_Tablosu" EntityType="Self.Kurs_Tablosu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Muhasebe_Tablosu" EntityType="Self.Muhasebe_Tablosu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Not_Tablosu" EntityType="Self.Not_Tablosu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Odeme_Detay_Tablosu" EntityType="Self.Odeme_Detay_Tablosu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ogrenci_Tablosu" EntityType="Self.Ogrenci_Tablosu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Personel_Tablosu" EntityType="Self.Personel_Tablosu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Ders_Tablosu_Alan_Tablosu" Association="Self.FK_Ders_Tablosu_Alan_Tablosu">
+            <End Role="Kurs_Tablosu" EntitySet="Kurs_Tablosu" />
+            <End Role="Ders_Tablosu" EntitySet="Ders_Tablosu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Muhassebe_Tablosu_Genel_Bilgi" Association="Self.FK_Muhassebe_Tablosu_Genel_Bilgi">
+            <End Role="Genel_Bilgi" EntitySet="Genel_Bilgi" />
+            <End Role="Muhasebe_Tablosu" EntitySet="Muhasebe_Tablosu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Not_Tablosu_Ders_Tablosu" Association="Self.FK_Not_Tablosu_Ders_Tablosu">
+            <End Role="Ders_Tablosu" EntitySet="Ders_Tablosu" />
+            <End Role="Not_Tablosu" EntitySet="Not_Tablosu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Not_Tablosu_Ogrenci_Tablosu" Association="Self.FK_Not_Tablosu_Ogrenci_Tablosu">
+            <End Role="Ogrenci_Tablosu" EntitySet="Ogrenci_Tablosu" />
+            <End Role="Not_Tablosu" EntitySet="Not_Tablosu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Odeme_Detay_Tablosu_Muhassebe_Tablosu" Association="Self.FK_Odeme_Detay_Tablosu_Muhassebe_Tablosu">
+            <End Role="Muhasebe_Tablosu" EntitySet="Muhasebe_Tablosu" />
+            <End Role="Odeme_Detay_Tablosu" EntitySet="Odeme_Detay_Tablosu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Personel_Tablosu_Genel_Bilgi" Association="Self.FK_Personel_Tablosu_Genel_Bilgi">
+            <End Role="Genel_Bilgi" EntitySet="Genel_Bilgi" />
+            <End Role="Personel_Tablosu" EntitySet="Personel_Tablosu" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="kurs_kayitModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Ders_Tablosu">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="Ders_Adi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Alan_id" Type="Int32" />
+          <Property Name="Sinif" Type="Int32" />
+          <NavigationProperty Name="Kurs_Tablosu" Relationship="Self.FK_Ders_Tablosu_Alan_Tablosu" FromRole="Ders_Tablosu" ToRole="Kurs_Tablosu" />
+          <NavigationProperty Name="Not_Tablosu" Relationship="Self.FK_Not_Tablosu_Ders_Tablosu" FromRole="Ders_Tablosu" ToRole="Not_Tablosu" />
+        </EntityType>
+        <EntityType Name="Genel_Bilgi">
+          <Key>
+            <PropertyRef Name="TC_no" />
+          </Key>
+          <Property Name="TC_no" Type="String" MaxLength="11" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Adi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Soyadi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Telefon" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="E_mail" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Adres" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Dogum_Tarihi" Type="DateTime" Precision="3" />
+          <Property Name="Il" Type="Int32" />
+          <Property Name="Ilce" Type="Int32" />
+          <Property Name="Sifre" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Muhasebe_Tablosu" Relationship="Self.FK_Muhassebe_Tablosu_Genel_Bilgi" FromRole="Genel_Bilgi" ToRole="Muhasebe_Tablosu" />
+          <NavigationProperty Name="Personel_Tablosu" Relationship="Self.FK_Personel_Tablosu_Genel_Bilgi" FromRole="Genel_Bilgi" ToRole="Personel_Tablosu" />
+        </EntityType>
+        <EntityType Name="Kurs_Tablosu">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="Alan_adi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Ders_Tablosu" Relationship="Self.FK_Ders_Tablosu_Alan_Tablosu" FromRole="Kurs_Tablosu" ToRole="Ders_Tablosu" />
+        </EntityType>
+        <EntityType Name="Muhasebe_Tablosu">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="Ogrenci_TC" Type="String" MaxLength="11" FixedLength="true" Unicode="true" />
+          <Property Name="Odeme_Tipi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Odeme_Tarihi" Type="DateTime" Precision="3" />
+          <Property Name="Genel_Tutar" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Genel_Kdv_Tutar" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="Genel_Bilgi" Relationship="Self.FK_Muhassebe_Tablosu_Genel_Bilgi" FromRole="Muhasebe_Tablosu" ToRole="Genel_Bilgi" />
+          <NavigationProperty Name="Odeme_Detay_Tablosu" Relationship="Self.FK_Odeme_Detay_Tablosu_Muhassebe_Tablosu" FromRole="Muhasebe_Tablosu" ToRole="Odeme_Detay_Tablosu" />
+        </EntityType>
+        <EntityType Name="Not_Tablosu">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Ogrencinin_Notu" Type="Int32" Nullable="false" />
+          <Property Name="Ders_id" Type="Int32" Nullable="false" />
+          <Property Name="Ogrenci_No" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Ders_Tablosu" Relationship="Self.FK_Not_Tablosu_Ders_Tablosu" FromRole="Not_Tablosu" ToRole="Ders_Tablosu" />
+          <NavigationProperty Name="Ogrenci_Tablosu" Relationship="Self.FK_Not_Tablosu_Ogrenci_Tablosu" FromRole="Not_Tablosu" ToRole="Ogrenci_Tablosu" />
+        </EntityType>
+        <EntityType Name="Odeme_Detay_Tablosu">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="Odeme_Tarihi" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Odeme_Tutari" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Taksit_Sayisi" Type="Int32" Nullable="false" />
+          <Property Name="Muhasebe_id" Type="Int32" Nullable="false" />
+          <Property Name="Odeme_Durumu" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Muhasebe_Tablosu" Relationship="Self.FK_Odeme_Detay_Tablosu_Muhassebe_Tablosu" FromRole="Odeme_Detay_Tablosu" ToRole="Muhasebe_Tablosu" />
+        </EntityType>
+        <EntityType Name="Ogrenci_Tablosu">
+          <Key>
+            <PropertyRef Name="Ogrenci_no" />
+          </Key>
+          <Property Name="TC_no" Type="String" MaxLength="11" FixedLength="true" Unicode="true" />
+          <Property Name="Ogrenci_no" Type="Int32" Nullable="false" />
+          <Property Name="Sinifi" Type="Byte" />
+          <Property Name="Kurs_id" Type="Int32" />
+          <NavigationProperty Name="Not_Tablosu" Relationship="Self.FK_Not_Tablosu_Ogrenci_Tablosu" FromRole="Ogrenci_Tablosu" ToRole="Not_Tablosu" />
+        </EntityType>
+        <EntityType Name="Personel_Tablosu">
+          <Key>
+            <PropertyRef Name="TC_no" />
+          </Key>
+          <Property Name="TC_no" Type="String" MaxLength="11" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Personel_Tipi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Genel_Bilgi" Relationship="Self.FK_Personel_Tablosu_Genel_Bilgi" FromRole="Personel_Tablosu" ToRole="Genel_Bilgi" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK_Ders_Tablosu_Alan_Tablosu">
+          <End Role="Kurs_Tablosu" Type="Self.Kurs_Tablosu" Multiplicity="0..1" />
+          <End Role="Ders_Tablosu" Type="Self.Ders_Tablosu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kurs_Tablosu">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Ders_Tablosu">
+              <PropertyRef Name="Alan_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Not_Tablosu_Ders_Tablosu">
+          <End Role="Ders_Tablosu" Type="Self.Ders_Tablosu" Multiplicity="1" />
+          <End Role="Not_Tablosu" Type="Self.Not_Tablosu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ders_Tablosu">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Not_Tablosu">
+              <PropertyRef Name="Ders_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Muhassebe_Tablosu_Genel_Bilgi">
+          <End Role="Genel_Bilgi" Type="Self.Genel_Bilgi" Multiplicity="0..1" />
+          <End Role="Muhasebe_Tablosu" Type="Self.Muhasebe_Tablosu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genel_Bilgi">
+              <PropertyRef Name="TC_no" />
+            </Principal>
+            <Dependent Role="Muhasebe_Tablosu">
+              <PropertyRef Name="Ogrenci_TC" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Personel_Tablosu_Genel_Bilgi">
+          <End Role="Genel_Bilgi" Type="Self.Genel_Bilgi" Multiplicity="1" />
+          <End Role="Personel_Tablosu" Type="Self.Personel_Tablosu" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Genel_Bilgi">
+              <PropertyRef Name="TC_no" />
+            </Principal>
+            <Dependent Role="Personel_Tablosu">
+              <PropertyRef Name="TC_no" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Odeme_Detay_Tablosu_Muhassebe_Tablosu">
+          <End Role="Muhasebe_Tablosu" Type="Self.Muhasebe_Tablosu" Multiplicity="1" />
+          <End Role="Odeme_Detay_Tablosu" Type="Self.Odeme_Detay_Tablosu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Muhasebe_Tablosu">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Odeme_Detay_Tablosu">
+              <PropertyRef Name="Muhasebe_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Not_Tablosu_Ogrenci_Tablosu">
+          <End Role="Ogrenci_Tablosu" Type="Self.Ogrenci_Tablosu" Multiplicity="1" />
+          <End Role="Not_Tablosu" Type="Self.Not_Tablosu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ogrenci_Tablosu">
+              <PropertyRef Name="Ogrenci_no" />
+            </Principal>
+            <Dependent Role="Not_Tablosu">
+              <PropertyRef Name="Ogrenci_No" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="kurs_kayitEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Ders_Tablosu" EntityType="Self.Ders_Tablosu" />
+          <EntitySet Name="Genel_Bilgi" EntityType="Self.Genel_Bilgi" />
+          <EntitySet Name="Kurs_Tablosu" EntityType="Self.Kurs_Tablosu" />
+          <EntitySet Name="Muhasebe_Tablosu" EntityType="Self.Muhasebe_Tablosu" />
+          <EntitySet Name="Not_Tablosu" EntityType="Self.Not_Tablosu" />
+          <EntitySet Name="Odeme_Detay_Tablosu" EntityType="Self.Odeme_Detay_Tablosu" />
+          <EntitySet Name="Ogrenci_Tablosu" EntityType="Self.Ogrenci_Tablosu" />
+          <EntitySet Name="Personel_Tablosu" EntityType="Self.Personel_Tablosu" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <AssociationSet Name="FK_Ders_Tablosu_Alan_Tablosu" Association="Self.FK_Ders_Tablosu_Alan_Tablosu">
+            <End Role="Kurs_Tablosu" EntitySet="Kurs_Tablosu" />
+            <End Role="Ders_Tablosu" EntitySet="Ders_Tablosu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Not_Tablosu_Ders_Tablosu" Association="Self.FK_Not_Tablosu_Ders_Tablosu">
+            <End Role="Ders_Tablosu" EntitySet="Ders_Tablosu" />
+            <End Role="Not_Tablosu" EntitySet="Not_Tablosu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Muhassebe_Tablosu_Genel_Bilgi" Association="Self.FK_Muhassebe_Tablosu_Genel_Bilgi">
+            <End Role="Genel_Bilgi" EntitySet="Genel_Bilgi" />
+            <End Role="Muhasebe_Tablosu" EntitySet="Muhasebe_Tablosu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Personel_Tablosu_Genel_Bilgi" Association="Self.FK_Personel_Tablosu_Genel_Bilgi">
+            <End Role="Genel_Bilgi" EntitySet="Genel_Bilgi" />
+            <End Role="Personel_Tablosu" EntitySet="Personel_Tablosu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Odeme_Detay_Tablosu_Muhassebe_Tablosu" Association="Self.FK_Odeme_Detay_Tablosu_Muhassebe_Tablosu">
+            <End Role="Muhasebe_Tablosu" EntitySet="Muhasebe_Tablosu" />
+            <End Role="Odeme_Detay_Tablosu" EntitySet="Odeme_Detay_Tablosu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Not_Tablosu_Ogrenci_Tablosu" Association="Self.FK_Not_Tablosu_Ogrenci_Tablosu">
+            <End Role="Ogrenci_Tablosu" EntitySet="Ogrenci_Tablosu" />
+            <End Role="Not_Tablosu" EntitySet="Not_Tablosu" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="kurs_kayitModelStoreContainer" CdmEntityContainer="kurs_kayitEntities">
+          <EntitySetMapping Name="Ders_Tablosu">
+            <EntityTypeMapping TypeName="kurs_kayitModel.Ders_Tablosu">
+              <MappingFragment StoreEntitySet="Ders_Tablosu">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Ders_Adi" ColumnName="Ders_Adi" />
+                <ScalarProperty Name="Alan_id" ColumnName="Alan_id" />
+                <ScalarProperty Name="Sinif" ColumnName="Sinif" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Genel_Bilgi">
+            <EntityTypeMapping TypeName="kurs_kayitModel.Genel_Bilgi">
+              <MappingFragment StoreEntitySet="Genel_Bilgi">
+                <ScalarProperty Name="TC_no" ColumnName="TC_no" />
+                <ScalarProperty Name="Adi" ColumnName="Adi" />
+                <ScalarProperty Name="Soyadi" ColumnName="Soyadi" />
+                <ScalarProperty Name="Telefon" ColumnName="Telefon" />
+                <ScalarProperty Name="E_mail" ColumnName="E-mail" />
+                <ScalarProperty Name="Adres" ColumnName="Adres" />
+                <ScalarProperty Name="Dogum_Tarihi" ColumnName="Dogum_Tarihi" />
+                <ScalarProperty Name="Il" ColumnName="Il" />
+                <ScalarProperty Name="Ilce" ColumnName="Ilce" />
+                <ScalarProperty Name="Sifre" ColumnName="Sifre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kurs_Tablosu">
+            <EntityTypeMapping TypeName="kurs_kayitModel.Kurs_Tablosu">
+              <MappingFragment StoreEntitySet="Kurs_Tablosu">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Alan_adi" ColumnName="Alan_adi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Muhasebe_Tablosu">
+            <EntityTypeMapping TypeName="kurs_kayitModel.Muhasebe_Tablosu">
+              <MappingFragment StoreEntitySet="Muhasebe_Tablosu">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Ogrenci_TC" ColumnName="Ogrenci_TC" />
+                <ScalarProperty Name="Odeme_Tipi" ColumnName="Odeme_Tipi" />
+                <ScalarProperty Name="Odeme_Tarihi" ColumnName="Odeme_Tarihi" />
+                <ScalarProperty Name="Genel_Tutar" ColumnName="Genel_Tutar" />
+                <ScalarProperty Name="Genel_Kdv_Tutar" ColumnName="Genel_Kdv_Tutar" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Not_Tablosu">
+            <EntityTypeMapping TypeName="kurs_kayitModel.Not_Tablosu">
+              <MappingFragment StoreEntitySet="Not_Tablosu">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Ogrencinin_Notu" ColumnName="Ogrencinin_Notu" />
+                <ScalarProperty Name="Ders_id" ColumnName="Ders_id" />
+                <ScalarProperty Name="Ogrenci_No" ColumnName="Ogrenci_No" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Odeme_Detay_Tablosu">
+            <EntityTypeMapping TypeName="kurs_kayitModel.Odeme_Detay_Tablosu">
+              <MappingFragment StoreEntitySet="Odeme_Detay_Tablosu">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Odeme_Tarihi" ColumnName="Odeme_Tarihi" />
+                <ScalarProperty Name="Odeme_Tutari" ColumnName="Odeme_Tutari" />
+                <ScalarProperty Name="Taksit_Sayisi" ColumnName="Taksit_Sayisi" />
+                <ScalarProperty Name="Muhasebe_id" ColumnName="Muhasebe_id" />
+                <ScalarProperty Name="Odeme_Durumu" ColumnName="Odeme_Durumu" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ogrenci_Tablosu">
+            <EntityTypeMapping TypeName="kurs_kayitModel.Ogrenci_Tablosu">
+              <MappingFragment StoreEntitySet="Ogrenci_Tablosu">
+                <ScalarProperty Name="TC_no" ColumnName="TC_no" />
+                <ScalarProperty Name="Ogrenci_no" ColumnName="Ogrenci_no" />
+                <ScalarProperty Name="Sinifi" ColumnName="Sinifi" />
+                <ScalarProperty Name="Kurs_id" ColumnName="Kurs_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Personel_Tablosu">
+            <EntityTypeMapping TypeName="kurs_kayitModel.Personel_Tablosu">
+              <MappingFragment StoreEntitySet="Personel_Tablosu">
+                <ScalarProperty Name="TC_no" ColumnName="TC_no" />
+                <ScalarProperty Name="Personel_Tipi" ColumnName="Personel_Tipi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="kurs_kayitModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
